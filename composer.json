@@ -1,0 +1,39 @@
+{
+    "name": "progminer/vk-live-header",
+    "description": "Script for live vk headers",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Eridan Domoratskiy",
+            "email": "eridan200@mail.ru"
+        }
+    ],
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.1",
+        "progminer/image-constructor": "dev-master",
+        "symfony/config": "^4.1",
+        "symfony/yaml": "^4.1",
+        "vkcom/vk-php-sdk": "^5.80",
+        "ext-gd": "^7.1"
+    },
+    "require-dev": {
+        "symfony/console": "^4.1"
+    },
+    "autoload": {
+        "psr-4": {
+            "VkLiveHeader\\": "src"
+        }
+    },
+    "repositories": [
+        {
+            "type": "git",
+            "url": "git@github.com:ProgMiner/image-constructor.git"
+        }
+    ],
+    "config": {
+        "optimize-autoloader": true,
+        "sort-packages": true
+    }
+}
