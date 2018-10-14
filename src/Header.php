@@ -63,7 +63,7 @@ class Header {
             ])['upload_url'];
 
         $tmpfile = tmpfile();
-        imagepng(Utility::imageToGD($this->sprite->render()), $tmpfile);
+        imagepng($this->sprite->render()->getResource(), $tmpfile);
 
         $meta = stream_get_meta_data($tmpfile);
 
