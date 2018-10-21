@@ -25,7 +25,6 @@ SOFTWARE. */
 namespace VkLiveHeader;
 
 use ImageConstructor\Sprite;
-use ImageConstructor\Utility;
 use VK\Client\VKApiClient;
 
 /**
@@ -33,7 +32,7 @@ use VK\Client\VKApiClient;
  *
  * @package VkLiveHeader
  */
-class Header {
+class Header implements \Serializable, \JsonSerializable {
 
     /**
      * @var Sprite Sprite that will be used as header
@@ -48,18 +47,17 @@ class Header {
      * Uploads rendered $sprite to VK as header of group
      *
      * @param VKApiClient $vk VK client
-     * @param int $groupId Group ID
-     * @param string $accessToken Access token
+     * @param VkGroup $group Group
      *
      * @return array Response from photos.saveOwnerCoverPhoto VK API method
      *
      * @throws \VK\Exceptions\VKApiException
      * @throws \VK\Exceptions\VKClientException
      */
-    public function refresh(VKApiClient $vk, int $groupId, string $accessToken): array {
+    public function refresh(VKApiClient $vk, VkGroup $group): array {
         $url = $vk->photos()->
-            getOwnerCoverPhotoUploadServer($accessToken, [
-                'group_id' => $groupId
+            getOwnerCoverPhotoUploadServer($group->accessToken(), [
+                'group_id' => $group->id()
             ])['upload_url'];
 
         $tmpfile = tmpfile();
@@ -71,8 +69,29 @@ class Header {
             upload($url, 'photo', $meta['uri']);
 
         $resp = $vk->photos()->
-            saveOwnerCoverPhoto($accessToken, $photo);
+            saveOwnerCoverPhoto($group->accessToken(), $photo);
 
         return $resp;
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function serialize() {
+        return serialize($this->sprite);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function unserialize($serialized) {
+        $this->sprite = unserialize($serialized);
+    }
+
+    /**
+     * @inheritdoc
+     */
+    public function jsonSerialize() {
+        return serialize($this->sprite);
     }
 }
