@@ -46,8 +46,8 @@ class Header implements \Serializable, \JsonSerializable {
     /**
      * Uploads rendered $sprite to VK as header of group
      *
-     * @param VKApiClient $vk VK client
-     * @param VkGroup $group Group
+     * @param VKApiClient $vk    VK client
+     * @param VkGroup     $group Group
      *
      * @return array Response from photos.saveOwnerCoverPhoto VK API method
      *

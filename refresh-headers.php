@@ -30,6 +30,7 @@ use Symfony\Component\Config\Definition\Processor;
 use VK\Client\VKApiClient;
 use VK\Exceptions\VKApiException;
 use VkLiveHeader\Configuration;
+use VkLiveHeader\Header;
 use VkLiveHeader\VkGroup;
 
 if (file_exists(__DIR__.'/../../autoload.php')) {
@@ -67,10 +68,14 @@ if (file_exists(__DIR__.'/../../autoload.php')) {
             $this->waitForLimit();
 
             try {
+                /**
+                 * @var VkGroup $group
+                 * @var Header  $header
+                 */
                 $header->refresh($vk, $group);
             } catch (VKApiException $e) {
                 fwrite(STDERR, $e->getMessage().PHP_EOL);
-                fwrite(STDERR, $e->getTraceAsString());
+                fwrite(STDERR, $e->getTraceAsString().PHP_EOL);
             }
         }
 
@@ -86,6 +91,7 @@ if (file_exists(__DIR__.'/../../autoload.php')) {
 
         ++$this->config['count'];
         if ($this->config['count'] <= self::MAX_REQUESTS_PER_SEC) {
+            usleep(1000000 / self::MAX_REQUESTS_PER_SEC);
             return;
         }
 
