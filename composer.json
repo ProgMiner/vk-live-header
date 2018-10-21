@@ -1,6 +1,7 @@
 {
     "name": "progminer/vk-live-header",
     "description": "Script for live vk headers",
+    "keywords": ["vk", "header", "cover", "group", "upload"],
     "license": "MIT",
     "authors": [
         {
@@ -16,7 +17,6 @@
         "ext-json": "^1.5",
         "progminer/image-constructor": "dev-master",
         "symfony/config": "^4.1",
-        "symfony/yaml": "^4.1",
         "vkcom/vk-php-sdk": "^5.80"
     },
     "require-dev": {
